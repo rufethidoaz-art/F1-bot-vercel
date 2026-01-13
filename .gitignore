@@ -1,0 +1,56 @@
+# F1 Telegram Bot - Vercel Version
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables (exclude actual tokens)
+.env
+.env.local
+
+# Cache
+*.cache
+.f1_cache/
+f1_cache/
+f1_cache_test/
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Vercel specific
+.vercel/
