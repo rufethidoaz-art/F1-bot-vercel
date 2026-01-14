@@ -149,8 +149,17 @@ def setup_bot():
 
     logger.info("Setting up Telegram bot application...")
 
-    # Create application with proper configuration for v20.7
-    application = Application.builder().token(BOT_TOKEN).build()
+    # Create application with proper configuration for v20.7+
+    # Use get_updates_*_timeout to avoid deprecation warning
+    application = (
+        Application.builder()
+        .token(BOT_TOKEN)
+        .get_updates_read_timeout(10)
+        .get_updates_write_timeout(10)
+        .get_updates_connect_timeout(10)
+        .get_updates_pool_timeout(10)
+        .build()
+    )
 
     # Add handlers
     application.add_handler(CommandHandler("start", start))
@@ -273,16 +282,11 @@ if __name__ == "__main__":
         else:
             # Run in direct polling mode - this is the simplest and most reliable approach
             logger.info("Starting bot in polling mode (direct)...")
-            # Use run_polling with proper configuration
+            # Timeouts are already configured in Application.builder()
             BOT_APP.run_polling(
                 drop_pending_updates=True,
                 poll_interval=1.0,
-                timeout=10,
                 bootstrap_retries=-1,
-                read_timeout=10,
-                write_timeout=10,
-                connect_timeout=10,
-                pool_timeout=10,
             )
     else:
         logger.error("Failed to initialize bot")
