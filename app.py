@@ -257,19 +257,33 @@ def get_logs():
 
 
 if __name__ == "__main__":
-    # Local development mode
-    logger.info("Starting F1 Bot in local mode...")
+    # Local development mode or direct server mode
+    logger.info("Starting F1 Bot in local/direct mode...")
 
-    # Start bot worker thread (non-daemon so it stays alive)
-    worker_thread = threading.Thread(target=bot_worker, daemon=False)
-    worker_thread.start()
-    logger.info(f"Bot worker thread started (Thread ID: {worker_thread.ident})")
-
-    # Initialize bot in main thread for webhook creation
+    # Initialize bot
     BOT_APP = setup_bot()
     if BOT_APP:
-        logger.info("Bot started successfully in local mode")
-        app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+        logger.info("Bot initialized successfully")
+
+        # Check if running as a web service or direct polling
+        if os.getenv("RUN_AS_SERVICE", "").lower() == "true":
+            # Run with web server for production
+            logger.info("Starting Flask web server on port 8080...")
+            app.run(host="0.0.0.0", port=8080, debug=False, use_reloader=False)
+        else:
+            # Run in direct polling mode - this is the simplest and most reliable approach
+            logger.info("Starting bot in polling mode (direct)...")
+            # Use run_polling with proper configuration
+            BOT_APP.run_polling(
+                drop_pending_updates=True,
+                poll_interval=1.0,
+                timeout=10,
+                bootstrap_retries=-1,
+                read_timeout=10,
+                write_timeout=10,
+                connect_timeout=10,
+                pool_timeout=10,
+            )
     else:
-        logger.error("Failed to start bot")
+        logger.error("Failed to initialize bot")
         sys.exit(1)

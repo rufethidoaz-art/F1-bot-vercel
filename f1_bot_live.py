@@ -473,6 +473,7 @@ def get_current_standings():
         # Try multiple APIs with better error handling
         apis = [
             f"https://api.jolpi.ca/ergast/f1/{season}/driverStandings.json",
+            f"http://ergast.com/api/f1/{season}/driverStandings.json",
         ]
 
         data = None
@@ -543,6 +544,7 @@ def get_constructor_standings():
         # Try multiple APIs
         apis = [
             f"https://api.jolpi.ca/ergast/f1/{season}/constructorStandings.json",
+            f"http://ergast.com/api/f1/{season}/constructorStandings.json",
         ]
 
         data = None
@@ -770,6 +772,7 @@ def get_f1_season_calendar():
         # Try multiple APIs
         apis = [
             f"https://api.jolpi.ca/ergast/f1/{season}.json",
+            f"http://ergast.com/api/f1/{season}.json",
         ]
 
         data = None

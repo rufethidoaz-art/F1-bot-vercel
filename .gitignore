@@ -54,3 +54,14 @@ Thumbs.db
 
 # Vercel specific
 .vercel/
+
+# Windows-specific (don't commit)
+gh-cli.msi
+githubcli-archive-keyring.gpg
+
+# Deployment scripts (run locally, not needed in repo)
+deploy.py
+push_to_github.py
+push_to_github.sh
+bot.log
+
